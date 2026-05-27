@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block title %}Iniciar Sesión{% endblock %}
+
+{% block content %}
+<div class="login-page d-flex align-items-center justify-content-center min-vh-100">
+
+    <!-- Fondo animado con partículas -->
+    <div class="login-bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <div class="login-card glass-card p-4 p-md-5">
+
+        <!-- Header de la tarjeta -->
+        <div class="text-center mb-4">
+            <div class="login-logo mb-3">
+                <i class="bi bi-clock-history"></i>
+            </div>
+            <h1 class="h3 fw-bold text-white mb-1">TurnosPro</h1>
+            <p class="text-muted-light mb-0">Sistema de Gestión de Nómina</p>
+        </div>
+
+        <!-- Separador -->
+        <div class="divider-line mb-4"></div>
+
+        <!-- Formulario de login -->
+        <form method="POST" action="{{ url_for('auth.login') }}" novalidate id="loginForm">
+
+            <!-- Campo: Correo electrónico -->
+            <div class="form-floating mb-3">
+                <input type="email"
+                       class="form-control glass-input"
+                       id="email"
+                       name="email"
+                       placeholder="correo@empresa.com"
+                       autocomplete="email"
+                       required>
+                <label for="email">
+                    <i class="bi bi-envelope me-2"></i>Correo electrónico
+                </label>
+            </div>
+
+            <!-- Campo: Contraseña -->
+            <div class="form-floating mb-3 position-relative">
+                <input type="password"
+                       class="form-control glass-input"
+                       id="password"
+                       name="password"
+                       placeholder="Contraseña"
+                       autocomplete="current-password"
+                       required>
+                <label for="password">
+                    <i class="bi bi-lock me-2"></i>Contraseña
+                </label>
+                <!-- Botón para mostrar/ocultar contraseña -->
+                <button type="button"
+                        class="btn-eye"
+                        id="togglePassword"
+                        title="Mostrar contraseña"
+                        aria-label="Mostrar u ocultar contraseña">
+                    <i class="bi bi-eye" id="eyeIcon"></i>
+                </button>
+            </div>
+
+            <!-- Recordar sesión -->
+            <div class="form-check mb-4">
+                <input class="form-check-input" type="checkbox"
+                       id="remember_me" name="remember_me">
+                <label class="form-check-label text-muted-light" for="remember_me">
+                    Recordar mi sesión
+                </label>
+            </div>
+
+            <!-- Botón de submit -->
+            <button type="submit"
+                    class="btn btn-primary-glow w-100 py-3 fw-semibold"
+                    id="submitBtn">
+                <span id="submitText">
+                    <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar Sesión
+                </span>
+                <span id="submitSpinner" class="d-none">
+                    <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                    Verificando...
+                </span>
+            </button>
+        </form>
+
+        <!-- Separador -->
+        <div class="divider-line mt-4 mb-3"></div>
+
+        <!-- Info de acceso por defecto (solo en desarrollo) -->
+        <div class="dev-hint p-3 rounded-3 text-center">
+            <p class="mb-1 small text-muted-light">
+                <i class="bi bi-info-circle me-1"></i>
+                <strong>Credenciales de desarrollo:</strong>
+            </p>
+            <code class="small text-accent">admin@empresa.com</code>
+            <span class="text-muted-light small mx-1">/</span>
+            <code class="small text-accent">Admin123!</code>
+        </div>
+
+    </div>
+</div>
+
+{% block extra_scripts %}
+<script>
+    // Toggle mostrar/ocultar contraseña
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        const passwordInput = document.getElementById('password');
+        const eyeIcon = document.getElementById('eyeIcon');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIcon.className = 'bi bi-eye-slash';
+            this.title = 'Ocultar contraseña';
+        } else {
+            passwordInput.type = 'password';
+            eyeIcon.className = 'bi bi-eye';
+            this.title = 'Mostrar contraseña';
+        }
+    });
+
+    // Mostrar spinner al enviar el formulario
+    document.getElementById('loginForm').addEventListener('submit', function() {
+        document.getElementById('submitText').classList.add('d-none');
+        document.getElementById('submitSpinner').classList.remove('d-none');
+        document.getElementById('submitBtn').disabled = true;
+    });
+</script>
+{% endblock %}
+{% endblock %}

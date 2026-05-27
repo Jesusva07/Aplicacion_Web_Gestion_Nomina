@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}Nuevo Empleado{% endblock %}
+
+{% block content %}
+<div class="container py-4" style="max-width: 700px;">
+
+    <div class="mb-4">
+        <a href="{{ url_for('employee.list_employees') }}"
+           class="btn btn-sm btn-outline-secondary mb-3">
+            <i class="bi bi-arrow-left me-1"></i>Volver a Empleados
+        </a>
+        <h1 class="page-title mb-1">
+            <i class="bi bi-person-plus-fill me-2 text-accent"></i>Nuevo Empleado
+        </h1>
+        <p class="text-muted">Crea el perfil laboral y la cuenta de acceso del empleado.</p>
+    </div>
+
+    <div class="glass-card p-4 p-md-5">
+        <form method="POST" action="{{ url_for('employee.new_employee') }}" novalidate>
+
+            <!-- SECCIÓN: Datos Personales -->
+            <h2 class="h6 fw-semibold text-accent text-uppercase letter-spacing mb-3">
+                <i class="bi bi-person me-2"></i>Datos Personales
+            </h2>
+
+            <div class="row g-3 mb-4">
+                <div class="col-12 col-md-8">
+                    <label for="name" class="form-label">Nombre completo <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control glass-input"
+                           id="name" name="name"
+                           placeholder="Ej: Juan Carlos Pérez Gómez"
+                           required maxlength="100">
+                </div>
+                <div class="col-12 col-md-4">
+                    <label for="document_id" class="form-label">Cédula / Doc. ID <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control glass-input"
+                           id="document_id" name="document_id"
+                           placeholder="Ej: 1234567890"
+                           required maxlength="20">
+                </div>
+            </div>
+
+            <div class="divider-line mb-4"></div>
+
+            <!-- SECCIÓN: Datos Laborales -->
+            <h2 class="h6 fw-semibold text-accent text-uppercase letter-spacing mb-3">
+                <i class="bi bi-briefcase me-2"></i>Datos Laborales
+            </h2>
+
+            <div class="row g-3 mb-4">
+                <div class="col-12 col-md-6">
+                    <label for="role" class="form-label">Cargo <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control glass-input"
+                           id="role" name="role"
+                           placeholder="Ej: Operario de Producción"
+                           required maxlength="80">
+                </div>
+                <div class="col-12 col-md-6">
+                    <label for="base_salary" class="form-label">Salario Base (COP/mes) <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text glass-input border-end-0">$</span>
+                        <input type="number" class="form-control glass-input border-start-0"
+                               id="base_salary" name="base_salary"
+                               placeholder="Ej: 1300000"
+                               min="1300000" step="1000"
+                               required>
+                    </div>
+                    <div class="form-text text-muted small">
+                        <i class="bi bi-info-circle me-1"></i>
+                        Mínimo: $1.300.000 COP (SMLMV 2024)
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calculadora de valor-hora en tiempo real -->
+            <div class="info-pill px-3 py-2 mb-4 d-flex align-items-center gap-2" id="hourlyRatePreview"
+                 style="display: none !important;">
+                <i class="bi bi-calculator text-accent"></i>
+                <span class="small">
+                    Valor hora ordinaria:
+                    <strong class="text-accent" id="hourlyRateValue">—</strong>
+                </span>
+            </div>
+
+            <div class="divider-line mb-4"></div>
+
+            <!-- SECCIÓN: Acceso al Sistema -->
+            <h2 class="h6 fw-semibold text-accent text-uppercase letter-spacing mb-3">
+                <i class="bi bi-shield-lock me-2"></i>Acceso al Sistema
+            </h2>
+
+            <div class="row g-3 mb-4">
+                <div class="col-12 col-md-6">
+                    <label for="email" class="form-label">Correo electrónico <span class="text-danger">*</span></label>
+                    <input type="email" class="form-control glass-input"
+                           id="email" name="email"
+                           placeholder="empleado@empresa.com"
+                           required>
+                </div>
+                <div class="col-12 col-md-6">
+                    <label for="password" class="form-label">Contraseña inicial <span class="text-danger">*</span></label>
+                    <input type="password" class="form-control glass-input"
+                           id="password" name="password"
+                           placeholder="Mínimo 8 caracteres"
+                           required minlength="6">
+                    <div class="form-text text-muted small">El empleado puede cambiarla después.</div>
+                </div>
+            </div>
+
+            <div class="d-flex gap-3 justify-content-end">
+                <a href="{{ url_for('employee.list_employees') }}"
+                   class="btn btn-outline-secondary">
+                    Cancelar
+                </a>
+                <button type="submit" class="btn btn-primary-glow px-4">
+                    <i class="bi bi-person-check-fill me-2"></i>Crear Empleado
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+{% block extra_scripts %}
+<script>
+    // Calculadora de valor-hora en tiempo real
+    const salaryInput = document.getElementById('base_salary');
+    const preview = document.getElementById('hourlyRatePreview');
+    const hourlyValue = document.getElementById('hourlyRateValue');
+
+    salaryInput.addEventListener('input', function() {
+        const salary = parseFloat(this.value);
+        if (salary > 0) {
+            const hourlyRate = salary / (4.33 * 42); // Fórmula colombiana
+            hourlyValue.textContent = '$ ' + hourlyRate.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' COP';
+            preview.style.display = 'flex';
+        } else {
+            preview.style.display = 'none';
+        }
+    });
+</script>
+{% endblock %}
+{% endblock %}

@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+
+{% block title %}Reporte de Nómina{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-4 py-4">
+
+    <div class="mb-4">
+        <a href="{{ url_for('payroll.index') }}" class="btn btn-sm btn-outline-secondary mb-3">
+            <i class="bi bi-arrow-left me-1"></i>Nueva Consulta
+        </a>
+        <h1 class="page-title mb-1">
+            <i class="bi bi-file-earmark-text me-2 text-accent"></i>Reporte de Nómina
+        </h1>
+        <p class="text-muted mb-0">
+            <strong>{{ employee.name }}</strong>
+            · CC: {{ employee.document_id }}
+            · {{ start_date.strftime('%d/%m/%Y') }} — {{ end_date.strftime('%d/%m/%Y') }}
+        </p>
+    </div>
+
+    {% if payroll_details %}
+
+    <!-- ============================================================
+         TARJETAS RESUMEN (KPIs)
+    ============================================================ -->
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3">
+            <div class="kpi-card glass-card-dark p-3 text-center">
+                <div class="kpi-icon text-primary mb-2"><i class="bi bi-hourglass-split"></i></div>
+                <div class="kpi-value">{{ "%.1f"|format(totals.total_hours) }}h</div>
+                <div class="kpi-label">Total Horas</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="kpi-card glass-card-dark p-3 text-center">
+                <div class="kpi-icon text-success mb-2"><i class="bi bi-sun"></i></div>
+                <div class="kpi-value">{{ "%.1f"|format(totals.ordinary_hours) }}h</div>
+                <div class="kpi-label">Horas Ordinarias</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="kpi-card glass-card-dark p-3 text-center">
+                <div class="kpi-icon text-warning mb-2"><i class="bi bi-lightning-charge"></i></div>
+                <div class="kpi-value">{{ "%.1f"|format(totals.extra_day_hours + totals.extra_night_hours) }}h</div>
+                <div class="kpi-label">Horas Extras</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="kpi-card glass-card-dark p-3 text-center highlight-kpi">
+                <div class="kpi-icon text-accent mb-2"><i class="bi bi-currency-dollar"></i></div>
+                <div class="kpi-value text-accent">$ {{ "{:,.0f}".format(totals.total_pay) }}</div>
+                <div class="kpi-label">Total a Pagar</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         DESGLOSE DE PAGOS
+    ============================================================ -->
+    <div class="row g-3 mb-4">
+        <div class="col-12 col-lg-4">
+            <div class="glass-card-dark p-4 h-100">
+                <h2 class="h6 fw-semibold text-accent mb-3">
+                    <i class="bi bi-pie-chart me-2"></i>Desglose del Período
+                </h2>
+                <div class="breakdown-list">
+                    <div class="breakdown-item">
+                        <span>Horas ordinarias diurnas</span>
+                        <strong>$ {{ "{:,.0f}".format(totals.ordinary_pay) }}</strong>
+                    </div>
+                    <div class="breakdown-item">
+                        <span>Recargo nocturno (+35%)</span>
+                        <strong class="text-warning">$ {{ "{:,.0f}".format(totals.night_surcharge_pay) }}</strong>
+                    </div>
+                    <div class="breakdown-item">
+                        <span>Extras diurnas (+25%)</span>
+                        <strong class="text-info">$ {{ "{:,.0f}".format(totals.extra_day_pay) }}</strong>
+                    </div>
+                    <div class="breakdown-item">
+                        <span>Extras nocturnas (+75%)</span>
+                        <strong class="text-danger">$ {{ "{:,.0f}".format(totals.extra_night_pay) }}</strong>
+                    </div>
+                    <div class="breakdown-item total-item">
+                        <span class="fw-bold">TOTAL A PAGAR</span>
+                        <strong class="text-accent fs-5">$ {{ "{:,.0f}".format(totals.total_pay) }}</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-8">
+            <!-- ============================================================
+                 TABLA DETALLE POR JORNADA
+            ============================================================ -->
+            <div class="glass-card-dark p-4 h-100">
+                <h2 class="h6 fw-semibold text-accent mb-3">
+                    <i class="bi bi-table me-2"></i>Detalle por Jornada
+                </h2>
+                <div class="table-responsive">
+                    <table class="table table-dark-custom table-hover table-sm">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Entrada</th>
+                                <th>Salida</th>
+                                <th>Ord. Diurna</th>
+                                <th>Ord. Noct.</th>
+                                <th>Extra D.</th>
+                                <th>Extra N.</th>
+                                <th class="text-end">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for detail in payroll_details %}
+                            {% set att = detail.attendance %}
+                            {% set res = detail.result %}
+                            <tr class="table-row-animate">
+                                <td class="fw-medium">
+                                    {{ att.clock_in_bogota.strftime('%d/%m') }}
+                                </td>
+                                <td class="text-success small">
+                                    {{ att.clock_in_bogota.strftime('%H:%M') }}
+                                </td>
+                                <td class="text-danger small">
+                                    {% if att.clock_out_bogota %}
+                                        {{ att.clock_out_bogota.strftime('%H:%M') }}
+                                    {% else %} — {% endif %}
+                                </td>
+                                <td class="small">{{ "%.2f"|format(res.ordinary_daytime_hours) }}h</td>
+                                <td class="small text-warning">
+                                    {% if res.ordinary_nighttime_hours > 0 %}
+                                        {{ "%.2f"|format(res.ordinary_nighttime_hours) }}h
+                                    {% else %} — {% endif %}
+                                </td>
+                                <td class="small text-info">
+                                    {% if res.extra_daytime_hours > 0 %}
+                                        {{ "%.2f"|format(res.extra_daytime_hours) }}h
+                                    {% else %} — {% endif %}
+                                </td>
+                                <td class="small text-danger">
+                                    {% if res.extra_nighttime_hours > 0 %}
+                                        {{ "%.2f"|format(res.extra_nighttime_hours) }}h
+                                    {% else %} — {% endif %}
+                                </td>
+                                <td class="text-end fw-medium text-accent small">
+                                    $ {{ "{:,.0f}".format(res.total_pay) }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr class="table-active fw-bold">
+                                <td colspan="3">TOTALES</td>
+                                <td>{{ "%.1f"|format(totals.ordinary_hours) }}h</td>
+                                <td>—</td>
+                                <td>{{ "%.1f"|format(totals.extra_day_hours) }}h</td>
+                                <td>{{ "%.1f"|format(totals.extra_night_hours) }}h</td>
+                                <td class="text-end text-accent">$ {{ "{:,.0f}".format(totals.total_pay) }}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+    <div class="text-center py-5">
+        <i class="bi bi-inbox display-1 text-muted mb-3 d-block"></i>
+        <h3 class="h5 text-muted">Sin registros en el período</h3>
+        <p class="text-muted small">No hay asistencias cerradas para
+            <strong>{{ employee.name }}</strong> entre las fechas seleccionadas.</p>
+        <a href="{{ url_for('payroll.index') }}" class="btn btn-primary-glow">
+            <i class="bi bi-arrow-left me-2"></i>Cambiar período
+        </a>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}

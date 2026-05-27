@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Detalle del Empleado{% endblock %}
+
+{% block content %}
+<div class="container py-4" style="max-width: 900px;">
+    <div class="mb-4">
+        <a href="{{ url_for('employee.list_employees') }}" class="btn btn-sm btn-outline-secondary mb-3">
+            <i class="bi bi-arrow-left me-1"></i>Volver
+        </a>
+        <h1 class="page-title mb-1">{{ employee.name }}</h1>
+        <p class="text-muted">CC: {{ employee.document_id }} · {{ employee.role }}</p>
+    </div>
+
+    <div class="row g-3">
+        <div class="col-12 col-md-5">
+            <div class="glass-card-dark p-4">
+                <div class="text-center mb-4">
+                    <div class="user-avatar mx-auto mb-3" style="width: 80px; height: 80px; font-size: 2rem;">
+                        {{ employee.name[0].upper() }}
+                    </div>
+                    <h2 class="h5 fw-bold mb-1">{{ employee.name }}</h2>
+                    <span class="badge {{ 'bg-success' if employee.is_active else 'bg-secondary' }}">
+                        {{ 'Activo' if employee.is_active else 'Inactivo' }}
+                    </span>
+                </div>
+                <div class="breakdown-list">
+                    <div class="breakdown-item">
+                        <span><i class="bi bi-card-text me-2 text-accent"></i>Cédula</span>
+                        <strong class="font-monospace">{{ employee.document_id }}</strong>
+                    </div>
+                    <div class="breakdown-item">
+                        <span><i class="bi bi-briefcase me-2 text-accent"></i>Cargo</span>
+                        <strong>{{ employee.role }}</strong>
+                    </div>
+                    <div class="breakdown-item">
+                        <span><i class="bi bi-currency-dollar me-2 text-accent"></i>Salario Base</span>
+                        <strong>$ {{ "{:,.0f}".format(employee.base_salary) }} COP</strong>
+                    </div>
+                    <div class="breakdown-item">
+                        <span><i class="bi bi-clock me-2 text-accent"></i>Valor/Hora</span>
+                        <strong class="text-accent">$ {{ "{:,.0f}".format(employee.hourly_rate) }} COP</strong>
+                    </div>
+                    {% if employee.user %}
+                    <div class="breakdown-item">
+                        <span><i class="bi bi-envelope me-2 text-accent"></i>Email</span>
+                        <strong class="small">{{ employee.user.email }}</strong>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="mt-4 d-flex gap-2">
+                    <a href="{{ url_for('payroll.index') }}"
+                       class="btn btn-primary-glow btn-sm w-100">
+                        <i class="bi bi-calculator me-1"></i>Calcular Nómina
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-7">
+            <div class="glass-card-dark p-4">
+                <h2 class="h6 fw-semibold text-accent mb-3">
+                    <i class="bi bi-clock-history me-2"></i>Últimas 10 Asistencias
+                </h2>
+                {% set recent = employee.attendances.order_by('clock_in desc').limit(10).all() %}
+                {% if recent %}
+                <div class="table-responsive">
+                    <table class="table table-dark-custom table-sm">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Entrada</th>
+                                <th>Salida</th>
+                                <th>Horas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for att in recent %}
+                            <tr>
+                                <td class="small">{{ att.clock_in_bogota.strftime('%d/%m/%Y') }}</td>
+                                <td class="small text-success">{{ att.clock_in_bogota.strftime('%H:%M') }}</td>
+                                <td class="small text-danger">
+                                    {{ att.clock_out_bogota.strftime('%H:%M') if att.clock_out_bogota else '—' }}
+                                </td>
+                                <td class="small text-accent">
+                                    {{ "%.1f"|format(att.total_hours_worked) if att.total_hours_worked else '—' }}h
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted text-center py-3">Sin asistencias registradas.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

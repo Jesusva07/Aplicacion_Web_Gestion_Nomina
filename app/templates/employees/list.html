@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}Empleados{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-4 py-4">
+
+    <div class="d-flex flex-wrap align-items-center justify-content-between mb-4 gap-3">
+        <div>
+            <h1 class="page-title mb-1">
+                <i class="bi bi-people-fill me-2 text-accent"></i>Gestión de Empleados
+            </h1>
+            <p class="text-muted mb-0">{{ employees|length }} empleado{{ 's' if employees|length != 1 }} registrado{{ 's' if employees|length != 1 }}</p>
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+            <a href="{{ url_for('employee.list_employees', show_inactive='true' if not show_inactive else 'false') }}"
+               class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-eye{% if show_inactive %}-slash{% endif %} me-1"></i>
+                {{ 'Ocultar inactivos' if show_inactive else 'Ver inactivos' }}
+            </a>
+            <a href="{{ url_for('employee.new_employee') }}"
+               class="btn btn-primary-glow btn-sm">
+                <i class="bi bi-person-plus-fill me-1"></i>Nuevo Empleado
+            </a>
+        </div>
+    </div>
+
+    {% if employees %}
+    <div class="table-responsive">
+        <table class="table table-dark-custom table-hover">
+            <thead>
+                <tr>
+                    <th>Empleado</th>
+                    <th>Cédula</th>
+                    <th>Cargo</th>
+                    <th>Salario Base</th>
+                    <th>Valor/Hora</th>
+                    <th>Estado</th>
+                    <th class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for emp in employees %}
+                <tr class="table-row-animate">
+                    <td>
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="user-avatar user-avatar-sm">
+                                {{ emp.name[0].upper() }}
+                            </div>
+                            <div>
+                                <div class="fw-medium">{{ emp.name }}</div>
+                                {% if emp.user %}
+                                <small class="text-muted">{{ emp.user.email }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </td>
+                    <td class="font-monospace">{{ emp.document_id }}</td>
+                    <td>{{ emp.role }}</td>
+                    <td class="fw-medium">
+                        $ {{ "{:,.0f}".format(emp.base_salary) }}
+                        <small class="text-muted d-block">COP/mes</small>
+                    </td>
+                    <td class="text-accent fw-medium">
+                        $ {{ "{:,.0f}".format(emp.hourly_rate) }}
+                        <small class="text-muted d-block">COP/hora</small>
+                    </td>
+                    <td>
+                        {% if emp.is_active %}
+                            <span class="badge bg-success">
+                                <i class="bi bi-check-circle me-1"></i>Activo
+                            </span>
+                        {% else %}
+                            <span class="badge bg-secondary">
+                                <i class="bi bi-x-circle me-1"></i>Inactivo
+                            </span>
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        <div class="d-flex justify-content-center gap-1">
+                            <a href="{{ url_for('employee.detail', employee_id=emp.id) }}"
+                               class="btn btn-sm btn-outline-info"
+                               title="Ver detalle">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a href="{{ url_for('payroll.report') }}?employee_id={{ emp.id }}&start_date={{ now.strftime('%Y-%m-01') if now is defined else '' }}&end_date={{ now.strftime('%Y-%m-%d') if now is defined else '' }}"
+                               class="btn btn-sm btn-outline-success"
+                               title="Ver nómina">
+                                <i class="bi bi-calculator"></i>
+                            </a>
+                            {% if emp.is_active %}
+                            <form method="POST"
+                                  action="{{ url_for('employee.deactivate', employee_id=emp.id) }}"
+                                  onsubmit="return confirm('¿Desactivar a {{ emp.name }}? Esta acción se puede revertir.')"
+                                  class="d-inline">
+                                <button type="submit"
+                                        class="btn btn-sm btn-outline-danger"
+                                        title="Desactivar">
+                                    <i class="bi bi-person-x"></i>
+                                </button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% else %}
+    <div class="text-center py-5">
+        <i class="bi bi-people display-1 text-muted mb-3 d-block"></i>
+        <h3 class="h5 text-muted">No hay empleados registrados</h3>
+        <p class="text-muted small mb-4">Comienza agregando el primer empleado al sistema</p>
+        <a href="{{ url_for('employee.new_employee') }}" class="btn btn-primary-glow">
+            <i class="bi bi-person-plus me-2"></i>Agregar Primer Empleado
+        </a>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}
