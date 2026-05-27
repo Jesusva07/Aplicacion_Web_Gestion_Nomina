@@ -1,0 +1,38 @@
+# =========================
+# IGNORAR ARCHIVOS PYTHON
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.env
+*.sqlite3
+
+# =========================
+# IGNORAR ARCHIVOS LATEX
+# =========================
+# LaTeX genera muchos archivos temporales al compilar que cambian en cada guardado.
+# Solo debemos subir los archivos fuente (.tex, .png, .bib).
+*.aux
+*.bbl
+*.blg
+*.brf
+*.fls
+*.fdb_latexmk
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+
+# Opcional: Ignorar los PDF generados para no pesar el repo (solo guarden el .tex)
+# Si quieren guardar el PDF final, quiten el comentario de la siguiente línea:
+# *.pdf 
+
+# =========================
+# IGNORAR SISTEMA OPERATIVO
+# =========================
+.DS_Store
+Thumbs.db
