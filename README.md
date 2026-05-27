@@ -1,1 +1,1 @@
-# Sistema Web de Gestion de Turnos y Nomina
+# Aplicacion Web para la gestion de turnos y nomina
