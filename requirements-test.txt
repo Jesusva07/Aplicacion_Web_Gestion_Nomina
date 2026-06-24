@@ -1,0 +1,27 @@
+"""
+requirements-test.txt — Dependencias adicionales para pruebas automatizadas.
+
+Instalar con:
+  pip install -r requirements.txt -r requirements-test.txt
+
+O en entorno de CI/CD:
+  pip install -r requirements-test.txt
+"""
+
+# Las dependencias base se instalan de requirements.txt
+
+# ===== TESTING FRAMEWORK =====
+pytest==7.4.3
+pytest-cov==4.1.0       # Cobertura de código
+pytest-flask==1.3.0     # Integración con Flask
+
+# ===== HERRAMIENTAS DE ANÁLISIS =====
+coverage==7.3.2         # Análisis de cobertura
+black==23.12.1          # Formateador de código
+flake8==6.1.0           # Linter
+isort==5.13.2           # Organizador de imports
+pylint==3.0.3           # Análisis estático
+mypy==1.7.1             # Type checking
+
+# ===== UTILIDADES =====
+faker==21.0.0           # Generador de datos ficticios para pruebas
