@@ -566,7 +566,7 @@ Este plan define una estrategia completa de pruebas para garantizar calidad, con
 
 ---
 
-Aprobado por: [Nombre]  
-Fecha: Enero 2024  
+Aprobado por: Luis Bonett  
+Fecha: Junio 2026  
 Versión: 1.0  
-Próxima revisión: Abril 2024
+
