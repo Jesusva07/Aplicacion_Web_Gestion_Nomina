@@ -2,7 +2,7 @@
 
 **Documento:** Plan de Pruebas v1.0  
 **Proyecto:** Aplicación Web de Gestión de Nómina y Turnos (TurnosPro)  
-**Fecha:** Enero 2024  
+**Fecha:** Junio 2026  
 **Estado:** En Implementación  
 **Autor:** Equipo de Desarrollo  
 
