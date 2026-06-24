@@ -1,12 +1,4 @@
-"""
-requirements-test.txt — Dependencias adicionales para pruebas automatizadas.
 
-Instalar con:
-  pip install -r requirements.txt -r requirements-test.txt
-
-O en entorno de CI/CD:
-  pip install -r requirements-test.txt
-"""
 
 # Las dependencias base se instalan de requirements.txt
 

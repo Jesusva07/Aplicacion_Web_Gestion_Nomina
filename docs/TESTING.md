@@ -152,11 +152,11 @@ xdg-open htmlcov/index.html
 
 | Cobertura | Evaluación | Acción |
 |---|---|---|
-| 95-100% | Excelente | ✅ Continuar |
-| 85-95% | Bueno | ✅ Aceptable |
-| 75-85% | Aceptable | ⚠️ Mejorar |
-| 50-75% | Bajo | ❌ Reforzar pruebas |
-| <50% | Crítico | ❌ Detener, aumentar pruebas |
+| 95-100% | Excelente | Continuar |
+| 85-95% | Bueno | Aceptable |
+| 75-85% | Aceptable | Mejorar |
+| 50-75% | Bajo | Reforzar pruebas |
+| <50% | Crítico | Detener, aumentar pruebas |
 
 ---
 
@@ -253,10 +253,10 @@ pytest tests/integration/test_auth.py::TestAuthRoutes::test_login_with_valid_cre
 ```
 
 **Verificar:**
-- ✅ Login funciona con credenciales correctas
-- ✅ Login falla con contraseña incorrecta
-- ✅ Logout cierra sesión
-- ✅ Rutas protegidas redirigen a login
+- Login funciona con credenciales correctas
+- Login falla con contraseña incorrecta
+- Logout cierra sesión
+- Rutas protegidas redirigen a login
 
 ### 5.2 Gestión de Empleados
 
@@ -272,10 +272,10 @@ pytest tests/integration/test_employees.py::TestEmployeeValidation -v
 ```
 
 **Verificar:**
-- ✅ Se crea empleado con datos válidos
-- ✅ Se previenen duplicados
-- ✅ Se validan salarios
-- ✅ Admin puede crear, empleado no
+- Se crea empleado con datos válidos
+- Se previenen duplicados
+- Se validan salarios
+- Admin puede crear, empleado no
 
 ### 5.3 Modelos y Lógica
 
@@ -291,10 +291,10 @@ pytest tests/unit/test_models.py::TestModelRelationships -v
 ```
 
 **Verificar:**
-- ✅ Contraseñas se hashean
-- ✅ Valor-hora se calcula correctamente
-- ✅ Relaciones entre modelos funcionan
-- ✅ Validaciones de uniqueness funcionan
+- Contraseñas se hashean
+- Valor-hora se calcula correctamente
+- Relaciones entre modelos funcionan
+- Validaciones de uniqueness funcionan
 
 ### 5.4 Nómina y Cálculos
 
@@ -310,10 +310,10 @@ pytest tests/integration/test_payroll.py::TestWorkingHoursValidation -v
 ```
 
 **Verificar:**
-- ✅ Horas ordinarias se calculan bien
-- ✅ Horas extras diurnas (+25%)
-- ✅ Recargo nocturno (+35%)
-- ✅ Máximo 42h semanales
+- Horas ordinarias se calculan bien
+- Horas extras diurnas (+25%)
+- Recargo nocturno (+35%)
+- Máximo 42h semanales
 
 ---
 
@@ -396,10 +396,10 @@ Crear `.git/hooks/pre-commit`:
 echo "Ejecutando pruebas..."
 pytest tests/unit/ -q
 if [ $? -ne 0 ]; then
-  echo "❌ Pruebas fallaron, commit bloqueado"
+  echo "Pruebas fallaron, commit bloqueado"
   exit 1
 fi
-echo "✅ Pruebas pasaron"
+echo "Pruebas pasaron"
 ```
 
 Ejecutar:
@@ -413,7 +413,7 @@ chmod +x .git/hooks/pre-commit
 
 ### 8.1 DO's (Hacer)
 
-✅ **Ejecutar pruebas regularmente**
+Ejecutar pruebas regularmente
 ```bash
 # Después de cambios
 pytest
@@ -422,13 +422,13 @@ pytest
 pytest --cov=app
 ```
 
-✅ **Mantener cobertura alta**
+Mantener cobertura alta
 ```bash
 # Revisar regularmente
 pytest --cov=app --cov-report=term-missing
 ```
 
-✅ **Agregar pruebas para bugs**
+Agregar pruebas para bugs
 ```bash
 # Primero crear test que falla
 pytest tests/unit/test_models.py::TestBugFix -v
@@ -436,7 +436,7 @@ pytest tests/unit/test_models.py::TestBugFix -v
 # Luego fijar bug hasta que pase
 ```
 
-✅ **Usar fixtures para datos**
+Usar fixtures para datos
 ```python
 def test_something(db_session, admin_user):
     # Usar fixtures, no crear manualmente
@@ -445,7 +445,7 @@ def test_something(db_session, admin_user):
 
 ### 8.2 DON'Ts (No Hacer)
 
-❌ **No usar BD de producción**
+No usar BD de producción
 ```bash
 # MALO: usar DB real
 DATABASE_URL=postgresql://prod
@@ -455,7 +455,7 @@ pytest
 pytest
 ```
 
-❌ **No ignorar pruebas fallidas**
+No ignorar pruebas fallidas
 ```bash
 # MALO
 pytest -q  # Ver qué falla
@@ -464,7 +464,7 @@ pytest -q  # Ver qué falla
 pytest -v  # Revisar cada una
 ```
 
-❌ **No tener pruebas sin docstring**
+No tener pruebas sin docstring
 ```python
 # MALO
 def test_x(db_session):

@@ -1,4 +1,4 @@
-#Suite de Pruebas - TurnosPro
+# Suite de Pruebas - TurnosPro
 
 Este directorio contiene todas las pruebas automatizadas para el sistema de gestión de nómina y turnos.
 
@@ -52,13 +52,13 @@ pytest tests/integration/
 pytest -v
 ```
 
-## 📊 Cobertura Actual
+## Cobertura Actual
 
-- **Modelos:** 95%
-- **Rutas de Autenticación:** 90%
-- **Rutas de Empleados:** 88%
-- **Cálculos de Nómina:** 92%
-- **Total:** ~90%
+- Modelos: 95%
+- Rutas de Autenticación: 90%
+- Rutas de Empleados: 88%
+- Cálculos de Nómina: 92%
+- Total: ~90%
 
 Ver reporte HTML:
 ```bash
@@ -67,48 +67,48 @@ start htmlcov/index.html  # Windows
 open htmlcov/index.html   # macOS
 ```
 
-## ✅ Casos de Prueba
+## Casos de Prueba
 
 ### Autenticación (7 pruebas)
-- ✅ Login con credenciales correctas
-- ✅ Login con contraseña incorrecta
-- ✅ Login con usuario inexistente
-- ✅ Logout de usuario
-- ✅ Protección de rutas autenticadas
-- ✅ Hashing seguro de contraseñas
-- ✅ Creación automática de admin
+- Login con credenciales correctas
+- Login con contraseña incorrecta
+- Login con usuario inexistente
+- Logout de usuario
+- Protección de rutas autenticadas
+- Hashing seguro de contraseñas
+- Creación automática de admin
 
 ### Gestión de Empleados (10 pruebas)
-- ✅ Crear empleado nuevo
-- ✅ Validar cédula única
-- ✅ Validar email único
-- ✅ Validar salario positivo
-- ✅ Listar empleados activos
-- ✅ Ver empleados inactivos
-- ✅ Desactivar empleado
-- ✅ Ver detalle de empleado
-- ✅ Denegar acceso a empleado
-- ✅ Calcular valor-hora
+- Crear empleado nuevo
+- Validar cédula única
+- Validar email único
+- Validar salario positivo
+- Listar empleados activos
+- Ver empleados inactivos
+- Desactivar empleado
+- Ver detalle de empleado
+- Denegar acceso a empleado
+- Calcular valor-hora
 
 ### Modelos (32 pruebas)
-- ✅ Creación de usuarios
-- ✅ Hash de contraseñas
-- ✅ Propiedades de modelos
-- ✅ Cálculos derivados
-- ✅ Relaciones entre entidades
-- ✅ Validaciones de uniqueness
-- ✅ Cascade delete
+- Creación de usuarios
+- Hash de contraseñas
+- Propiedades de modelos
+- Cálculos derivados
+- Relaciones entre entidades
+- Validaciones de uniqueness
+- Cascade delete
 
 ### Nómina (12 pruebas)
-- ✅ Horas ordinarias
-- ✅ Horas extras diurnas (+25%)
-- ✅ Recargo nocturno (+35%)
-- ✅ Horas extras nocturnas (+75%)
-- ✅ Máximo 42h ordinarias/semana
-- ✅ Valores según normativa colombiana
-- ✅ Validación de datos
+- Horas ordinarias
+- Horas extras diurnas (+25%)
+- Recargo nocturno (+35%)
+- Horas extras nocturnas (+75%)
+- Máximo 42h ordinarias/semana
+- Valores según normativa colombiana
+- Validación de datos
 
-## 🔍 Ejemplos de Uso
+## Ejemplos de Uso
 
 ### Ejecutar prueba específica
 ```bash
@@ -140,21 +140,24 @@ pytest -x
 pytest --lf
 ```
 
-## 🛠️ Fixtures Disponibles
+## Fixtures Disponibles
 
-Definidas en `conftest.py`:
+Definidas en conftest.py:
 
 - `app` - Instancia de Flask configurada
 - `client` - Cliente HTTP para pruebas
 - `db_session` - Sesión de base de datos
-- `admin_user` - Usuario admin de prueba
-- `employee_user` - Empleado con usuario
-- `employee_two` - Segundo empleado
-- `shift_morning` - Turno matutino (6:00-14:00)
-- `shift_night` - Turno nocturno (21:00-06:00)
-- `attendance_normal` - Asistencia 8 horas
-- `attendance_overtime` - Asistencia 12 horas (con extras)
-- `attendance_night` - Asistencia nocturna 9 horas
+- app - Instancia de Flask configurada
+- client - Cliente HTTP para pruebas
+- db_session - Sesión de base de datos
+- admin_user - Usuario admin de prueba
+- employee_user - Empleado con usuario
+- employee_two - Segundo empleado
+- shift_morning - Turno matutino (6:00-14:00)
+- shift_night - Turno nocturno (21:00-06:00)
+- attendance_normal - Asistencia 8 horas
+- attendance_overtime - Asistencia 12 horas (con extras)
+- attendance_night - Asistencia nocturna 9 horas
 
 Ejemplo:
 ```python
@@ -164,7 +167,7 @@ def test_something(db_session, admin_user, employee_user):
     assert employee_user.employee is not None
 ```
 
-## 📈 Reportes
+## Reportes
 
 ### HTML con Cobertura
 ```bash
@@ -188,7 +191,7 @@ pytest --junit-xml=test-results.xml
 pytest --cov=app --cov-report=term-missing
 ```
 
-## 🐛 Debugging
+## Debugging
 
 ### Ver logs/prints
 ```bash
@@ -210,7 +213,7 @@ pytest --tb=long -v
 pytest --collect-only
 ```
 
-## 📋 Requisitos
+## Requisitos
 
 - Python 3.11+
 - pytest 7.4.3
@@ -219,13 +222,13 @@ pytest --collect-only
 
 Ver [requirements-test.txt](../requirements-test.txt)
 
-## 🔗 Documentación
+## Documentación
 
 - [PLAN_DE_PRUEBAS.md](./PLAN_DE_PRUEBAS.md) - Plan profesional completo
 - [TESTING.md](./TESTING.md) - Guía detallada de ejecución
 - [conftest.py](./conftest.py) - Fixtures y configuración
 
-## 📊 Estadísticas
+## Estadísticas
 
 | Métrica | Valor |
 |---------|-------|
@@ -235,16 +238,16 @@ Ver [requirements-test.txt](../requirements-test.txt)
 | Cobertura Promedio | ~90% |
 | Tiempo Ejecución | ~8-10s |
 
-## ✨ Próximas Mejoras
+## Próximas Mejoras
 
-- [ ] Pruebas E2E con Selenium (Fase 2)
-- [ ] Pruebas de rendimiento
-- [ ] Pruebas de compatibilidad móvil
-- [ ] Integración con CI/CD (GitHub Actions)
-- [ ] Reporting automático
-- [ ] Load testing
+- Pruebas E2E con Selenium (Fase 2)
+- Pruebas de rendimiento
+- Pruebas de compatibilidad móvil
+- Integración con CI/CD (GitHub Actions)
+- Reporting automático
+- Load testing
 
-## 📞 Soporte
+## Soporte
 
 Para problemas o preguntas sobre pruebas:
 1. Revisar [TESTING.md](./TESTING.md)

@@ -22,25 +22,25 @@ Este documento define la estrategia, alcance y procedimientos para las pruebas a
 
 ### 1.2 Alcance
 
-**Módulos Incluidos:**
-- ✅ Autenticación y gestión de usuarios (Login/Logout)
-- ✅ Gestión de empleados (CRUD)
-- ✅ Gestión de turnos y asistencia
-- ✅ Cálculos de nómina y recargos
-- ✅ Control de acceso basado en roles (RBAC)
+Módulos Incluidos:
+- Autenticación y gestión de usuarios (Login/Logout)
+- Gestión de empleados (CRUD)
+- Gestión de turnos y asistencia
+- Cálculos de nómina y recargos
+- Control de acceso basado en roles (RBAC)
 
-**Módulos Excluidos (Fase 2):**
+Módulos Excluidos (Fase 2):
 - Integración con sistema de nómina externo
 - Exportación avanzada de reportes (PDF/Excel)
 - Sincronización con base de datos de producción
 
 ### 1.3 Objetivos de Pruebas
 
-1. **Confiabilidad:** Garantizar que el sistema funciona sin errores
-2. **Exactitud:** Validar cálculos de nómina según normativa colombiana
-3. **Seguridad:** Verificar control de acceso y validación de datos
-4. **Mantenibilidad:** Facilitar cambios futuros sin regresiones
-5. **Cobertura:** Alcanzar mínimo 80% de cobertura de código
+1. Confiabilidad: Garantizar que el sistema funciona sin errores
+2. Exactitud: Validar cálculos de nómina según normativa colombiana
+3. Seguridad: Verificar control de acceso y validación de datos
+4. Mantenibilidad: Facilitar cambios futuros sin regresiones
+5. Cobertura: Alcanzar mínimo 80% de cobertura de código
 
 ---
 
@@ -100,34 +100,34 @@ Este documento define la estrategia, alcance y procedimientos para las pruebas a
 #### 2.2.1 Pruebas Funcionales
 Verifican que cada función cumple requisitos especificados.
 
-**Ejemplos:**
-- ✅ Admin puede crear empleados
-- ✅ Empleado no puede acceder a nómina
-- ✅ Salario-hora se calcula correctamente
+Ejemplos:
+- Admin puede crear empleados
+- Empleado no puede acceder a nómina
+- Salario-hora se calcula correctamente
 
 #### 2.2.2 Pruebas de Validación
 Verifican validación de datos de entrada.
 
-**Ejemplos:**
-- ✅ No permite salario negativo
-- ✅ No permite empleados sin nombre
-- ✅ No permite emails duplicados
+Ejemplos:
+- No permite salario negativo
+- No permite empleados sin nombre
+- No permite emails duplicados
 
 #### 2.2.3 Pruebas de Seguridad
 Verifican control de acceso y protección de datos.
 
-**Ejemplos:**
-- ✅ Login con contraseña incorrecta falla
-- ✅ Empleado no puede ver nómina de otros
-- ✅ Sesión expira después de inactividad
+Ejemplos:
+- Login con contraseña incorrecta falla
+- Empleado no puede ver nómina de otros
+- Sesión expira después de inactividad
 
 #### 2.2.4 Pruebas de Rendimiento (Fase 2)
 Verifican tiempo de respuesta y carga.
 
-**Objetivos:**
-- ✅ Login < 500ms
-- ✅ Listado 1000 empleados < 2s
-- ✅ Cálculo nómina < 5s
+Objetivos:
+- Login < 500ms
+- Listado 1000 empleados < 2s
+- Cálculo nómina < 5s
 
 #### 2.2.5 Pruebas de Compatibilidad
 Verifican funcionamiento en diferentes navegadores/plataformas.
@@ -430,27 +430,27 @@ mypy app/
 
 ### 8.1 Criterios de Aceptación
 
-✅ **Funcional**
+Funcional
 - Todas las pruebas unitarias pasan (100%)
 - Todas las pruebas de integración pasan (100%)
 - Cobertura mínima 85% de código
 
-✅ **Normativa**
+Normativa
 - Cálculos cumplen Ley 1846/2017 colombiana
 - Validaciones previenen datos inválidos
 - Control de acceso funciona correctamente
 
-✅ **Calidad**
+Calidad
 - Código sigue PEP8
 - Sin warnings en linter
 - Documentación actualizada
 
 ### 8.2 Criterios de Liberación
 
-- ✅ 100% de pruebas pasan
-- ✅ Cobertura ≥ 85%
-- ✅ 0 errores críticos/bloqueadores
-- ✅ Revisión de código completada
+- 100% de pruebas pasan
+- Cobertura ≥ 85%
+- 0 errores críticos/bloqueadores
+- Revisión de código completada
 
 ### 8.3 Métricas
 
@@ -558,15 +558,15 @@ Configurar en GitHub Actions:
 
 Este plan define una estrategia completa de pruebas para garantizar calidad, confiabilidad y cumplimiento normativo del sistema de gestión de nómina. La ejecución rigurosa de estos casos asegura que:
 
-✅ El sistema cumple funcionalidad requerida  
-✅ Los cálculos son precisos según normativa  
-✅ La seguridad y control de acceso funcionan  
-✅ Los datos se mantienen íntegros  
-✅ Se facilita mantenimiento futuro  
+- El sistema cumple funcionalidad requerida
+- Los cálculos son precisos según normativa
+- La seguridad y control de acceso funcionan
+- Los datos se mantienen íntegros
+- Se facilita mantenimiento futuro
 
 ---
 
-**Aprobado por:** [Nombre]  
-**Fecha:** Enero 2024  
-**Versión:** 1.0  
-**Próxima revisión:** Abril 2024
+Aprobado por: [Nombre]  
+Fecha: Enero 2024  
+Versión: 1.0  
+Próxima revisión: Abril 2024

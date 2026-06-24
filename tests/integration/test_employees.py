@@ -172,7 +172,8 @@ class TestEmployeeRoutes:
         
         assert response.status_code == 200
         # Debe mostrar error
-        assert b"mayor" in response.data.lower() or b"válido" in response.data.lower()
+        response_text = response.data.decode("utf-8").lower()
+        assert "mayor" in response_text or "válido" in response_text
 
     def test_employee_detail_page(self, client, admin_user, employee_user):
         """Verifica que se muestra el detalle del empleado."""
@@ -291,4 +292,5 @@ class TestEmployeeValidation:
         }, follow_redirects=True)
         
         assert response.status_code == 200
-        assert b"mayor" in response.data.lower() or b"válido" in response.data.lower()
+        response_text = response.data.decode("utf-8").lower()
+        assert "mayor" in response_text or "válido" in response_text
