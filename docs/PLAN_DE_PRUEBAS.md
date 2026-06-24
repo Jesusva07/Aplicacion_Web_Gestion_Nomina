@@ -4,7 +4,7 @@
 **Proyecto:** Aplicación Web de Gestión de Nómina y Turnos (TurnosPro)  
 **Fecha:** Junio 2026  
 **Estado:** En Implementación  
-**Autor:** Equipo de Desarrollo  
+**Autor:** Sebastian Albis y Jesús Valencia  
 
 ---
 
